@@ -12,14 +12,19 @@ import lt_is_le
 
 local notation "F" => Fibonacci
 
-private theorem trichotomy ( n : ℕ ) 
+private theorem trichotomy ( n : ℕ )
 : ( n = 0 ) ∨ ( n = 1 ) ∨ ( ∃ (m:ℕ), n = m.succ.succ )
 := by
   sorry
 
 
 
-example ( n : ℕ ) 
+example ( n : ℕ )
 : ( n % 3 ) = 0 ↔ ( F n % 2 ) = 0
 := by
-  sorry
+  induction n using strong_induction
+  case ih n ih =>
+  rcases trichotomy n with h|h|h
+    --n=0
+    rewrite [h]
+    decide
