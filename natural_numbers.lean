@@ -48,6 +48,8 @@ meta def unexpandTimes : Lean.PrettyPrinter.Unexpander
 def le ( m n : ℕ ) : Prop :=
   ∃ (k:ℕ), k + m = n
 
+
+
 def lt ( m n : ℕ ) : Prop :=
   ( le m n ) ∧ ¬ ( m = n )
 
@@ -78,14 +80,20 @@ def divides (m n : ℕ) : Prop :=
 
 def InitialSegment (m:ℕ) := { n : ℕ // n ≤  m }
 def FinalSegment (m:ℕ) := { n : ℕ // n ≥ m }
-def Interval (a b : ℕ) := { n : ℕ // a ≤ n ∧ n ≤ b }
+
+structure ℕ.Interval where
+  lower : ℕ
+  upper : ℕ
+
+instance : CoeSort ℕ.Interval Type where
+  coe I := { n : ℕ // I.lower ≤ n ∧ n ≤ I.upper }
 
 notation "ℕ≤" m => InitialSegment m
 notation "ℕ≥" m => FinalSegment m
 notation "ℕ₊" => ℕ> 0
 
 macro_rules
-| `(ℕ[$a $b]) => `(ℕ.Interval $a $b)
+| `(ℕ[$a $b]) => `(ℕ.Interval.mk $a $b)
 
 
 /- Remainder -/
@@ -104,6 +112,24 @@ meta def unexpandRemainder : Lean.PrettyPrinter.Unexpander
   | `($_ $n $m) => `($n % $m)
   | _ => throw ()
 
+    
+ /- Sums and products -/ 
 
-/- Sums and products -/
+def sum ( f : ℕ → ℕ )  : ℕ → ℕ
+| 0 => 0
+| ℕ.succ M => ( sum f M ) + f M.succ
+
+def prod ( f : ℕ → ℕ )  : ℕ → ℕ
+| 0 => 1
+| ℕ.succ M => ( prod f M ) * f M.succ
+
+
+
+def irreducible ( n : ℕ ) : Prop :=
+  (n ≠ 1) ∧ ∀ (a b : ℕ), a * b = n → a = 1 ∨ b = 1
+
+
+
+
+def ℕ_pos := { n : ℕ // n > 0 }
 

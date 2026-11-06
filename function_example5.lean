@@ -14,31 +14,48 @@ def Odds := { x : ℕ // x % 2 = 1 }
 
 def f ( x : ℕ ) : ℕ := 2 * x
 
+
 private theorem double_has_remainder_0_by_2 ( n : ℕ ) 
 : ( n * 2 ) % 2 = 0 := by
   sorry
 
+
+
 private theorem remainder_0_by_2_then_2_divides ( n : ℕ )
 : n % 2 = 0 → ∃ (m:ℕ), n = m*2 := by
   sorry
+  
 
+
+-- this function should be the same as f, but with codomain Evens instead of ℕ 
 def g ( n : ℕ ) : Evens := sorry
 
 example : surjective g := by
   sorry
 
-def i ( y : Evens ) : ℕ := y.val
+
+/- this should be the function that takes an even number to the underlying
+natural number; it justs forgets the proof that the number was even -/
+def i ( y : Evens ) : ℕ := sorry
+
 
 example : ¬ surjective i := by
   sorry
 
+
+
 private theorem f_eq_ig : f = i ∘ g := by
   sorry
+
 
 private theorem not_2_divides_1 ( z : ℕ )
 : 2*z ≠ 1 := by
   sorry
 
-open Classical
+
 example : ¬ surjective f := by
   sorry
+
+
+
+
