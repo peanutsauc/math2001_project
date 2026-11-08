@@ -1,4 +1,4 @@
-import natural_numbers
+import natural_numbers 
 import functions
 import succ_inj
 import times_comm
